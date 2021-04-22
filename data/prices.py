@@ -7,6 +7,7 @@ from wtforms import BooleanField, SubmitField
 from wtforms.validators import DataRequired
 
 
+#класс объявлений для работы с бд
 class Jobs(SqlAlchemyBase):
     __tablename__ = 'job'
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)

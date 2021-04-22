@@ -1,3 +1,4 @@
+#Все импорты
 from cloudipsp import Api, Checkout
 from flask import Flask, render_template
 from werkzeug.exceptions import abort
@@ -9,6 +10,7 @@ from data.users import User, LoginForm, RegisterForm
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from flask_ngrok import run_with_ngrok
 
+#конфигурация приложения
 app = Flask(__name__)
 run_with_ngrok(app)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -17,7 +19,7 @@ login_manager.init_app(app)
 db_session.global_init("db/blogs.db")
 db_sess = db_session.create_session()
 
-
+#основная страница
 @app.route('/')
 def base():
     if current_user.is_authenticated:
@@ -26,6 +28,7 @@ def base():
     return render_template('main.html', title='Главная')
 
 
+#страница оплаты
 @app.route('/buy/<int:id>')
 def item_buy(id):
     item = db_sess.query(Jobs).get(id)
@@ -44,14 +47,14 @@ def item_buy(id):
 def load_user(user_id):
     return db_sess.query(User).get(user_id)
 
-
+#выход из аккаунта
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect("/")
 
-
+#страница входа в аккаунт
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -66,6 +69,7 @@ def login():
     return render_template('login.html', title='Авторизация', form=form)
 
 
+#страница регистрации
 @app.route('/register', methods=['GET', 'POST'])
 def reg():
     form = RegisterForm()
@@ -90,6 +94,7 @@ def reg():
                            form=form)
 
 
+#страница добавления объявления
 @app.route('/jobs_add', methods=['GET', 'POST'])
 @login_required
 def add_news():
@@ -110,6 +115,7 @@ def add_news():
                            form=form)
 
 
+#редактирование объявления
 @app.route('/jobs/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_jobs(id):
@@ -133,6 +139,7 @@ def edit_jobs(id):
                            form=form)
 
 
+#удаление объявления
 @app.route('/jobs/delete/<int:id>', methods=['GET', 'POST'])
 @login_required
 def delete_jobs(id):

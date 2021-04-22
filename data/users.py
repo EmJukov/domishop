@@ -12,6 +12,7 @@ from werkzeug.security import check_password_hash
 from .db_session import SqlAlchemyBase
 
 
+#класс пользователя для работы с бд
 class User(SqlAlchemyBase, UserMixin):
     __tablename__ = 'user'
     id = sqlalchemy.Column(sqlalchemy.Integer,
