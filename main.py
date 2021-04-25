@@ -153,6 +153,10 @@ def delete_jobs(id):
     db_sess.commit()
     return redirect('/')
 
+@app.route('/info')
+def info():
+    return render_template('info.html')
+
 
 if __name__ == '__main__':
     app.run()
